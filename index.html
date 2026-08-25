@@ -1,516 +1,1866 @@
 <!DOCTYPE html>
 <html lang="gu">
 <head>
-
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- GOOGLE SEARCH CONSOLE VERIFICATION -->
-  <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE">
+  <title>Gir Kitchenware Studio - Admin Panel</title>
 
-  <!-- SEO -->
-  <title>Gir Kitchenware Studio | Kitchenware Shop in Talala Gir</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <meta name="description"
-        content="Gir Kitchenware Studio - Talala Gir માં ગુણવત્તાવાળા Kitchenware, Lunch Box, Water Bottles, Vegetable Choppers અને Kitchen Accessories મેળવો.">
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
 
-  <meta name="keywords"
-        content="Gir Kitchenware Studio, Kitchenware Talala Gir, Kitchenware Shop Talala, Lunch Box, Water Bottle, Vegetable Chopper, Kitchen Accessories">
+    /* =========================
+       LOGIN
+    ========================= */
 
-  <meta name="author" content="Gir Kitchenware Studio">
+    #loginBox {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #111827, #374151);
+    }
 
-  <link rel="stylesheet" href="style.css">
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      padding: 35px;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    }
 
+    .login-card h1 {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .login-card .subtitle {
+      text-align: center;
+      color: #777;
+      margin-bottom: 28px;
+    }
+
+    .logo-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      background: #111827;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+
+    /* =========================
+       INPUTS
+    ========================= */
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      outline: none;
+      font-size: 15px;
+      background: white;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #111827;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 12px 18px;
+    }
+
+    .login-btn {
+      width: 100%;
+      background: #111827;
+      color: white;
+      margin-top: 5px;
+    }
+
+    .login-btn:hover {
+      background: #000;
+    }
+
+    /* =========================
+       LOGIN MESSAGE
+    ========================= */
+
+    #loginMessage {
+      text-align: center;
+      margin-top: 15px;
+      color: #dc2626;
+      font-size: 14px;
+    }
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    #dashboard {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: #111827;
+      color: white;
+      padding: 16px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar h2 {
+      font-size: 21px;
+    }
+
+    .topbar small {
+      display: block;
+      color: #d1d5db;
+      margin-top: 3px;
+    }
+
+    .logout-btn {
+      background: #dc2626;
+      color: white;
+    }
+
+    .logout-btn:hover {
+      background: #b91c1c;
+    }
+
+    .container {
+      max-width: 1250px;
+      margin: auto;
+      padding: 25px;
+    }
+
+    /* =========================
+       DASHBOARD GRID
+    ========================= */
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 25px;
+      align-items: start;
+    }
+
+    /* =========================
+       CARD
+    ========================= */
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    /* =========================
+       PRODUCT FORM
+    ========================= */
+
+    .save-btn {
+      background: #16a34a;
+      color: white;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .save-btn:hover {
+      background: #15803d;
+    }
+
+    .save-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .cancel-btn {
+      background: #6b7280;
+      color: white;
+      width: 100%;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .cancel-btn:hover {
+      background: #4b5563;
+    }
+
+    #preview {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      margin-top: 12px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      display: none;
+      background: #f8fafc;
+    }
+
+    #status {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: 600;
+      min-height: 22px;
+    }
+
+    /* =========================
+       PRODUCTS HEADER
+    ========================= */
+
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 15px;
+    }
+
+    .product-count {
+      background: #111827;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    /* =========================
+       PRODUCTS
+    ========================= */
+
+    #productList {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .product {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: 0.2s;
+    }
+
+    .product:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .product > img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #f3f4f6;
+      display: block;
+    }
+
+    .product-info {
+      padding: 15px;
+    }
+
+    .product-info h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .old-price {
+      color: #888;
+      text-decoration: line-through;
+      font-size: 14px;
+      margin-right: 7px;
+    }
+
+    .offer {
+      color: #16a34a;
+      font-weight: 700;
+    }
+
+    .category {
+      display: inline-block;
+      background: #f3f4f6;
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-bottom: 9px;
+    }
+
+    .description {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 13px;
+    }
+
+    /* =========================
+       ACTION BUTTONS
+    ========================= */
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .edit {
+      flex: 1;
+      background: #2563eb;
+      color: white;
+    }
+
+    .edit:hover {
+      background: #1d4ed8;
+    }
+
+    .delete {
+      flex: 1;
+      background: #dc2626;
+      color: white;
+    }
+
+    .delete:hover {
+      background: #b91c1c;
+    }
+
+    /* =========================
+       EMPTY
+    ========================= */
+
+    .empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #777;
+      background: #f9fafb;
+      border-radius: 12px;
+      grid-column: 1 / -1;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1000px) {
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #productList {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+    }
+
+    @media (max-width: 650px) {
+
+      .topbar {
+        padding: 14px 15px;
+      }
+
+      .topbar h2 {
+        font-size: 17px;
+      }
+
+      .topbar small {
+        font-size: 11px;
+      }
+
+      .logout-btn {
+        padding: 9px 12px;
+        font-size: 13px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      .card {
+        padding: 17px;
+      }
+
+      #productList {
+        grid-template-columns: 1fr;
+      }
+
+      .login-card {
+        padding: 25px 20px;
+      }
+
+    }
+  </style>
 </head>
-
 
 <body>
 
-  <!-- HEADER -->
-  <header>
+  <!-- =====================================================
+       LOGIN PAGE
+  ====================================================== -->
 
-    <div class="navbar">
+  <section id="loginBox">
 
-      <div class="logo">
+    <div class="login-card">
 
-        <img
-          src="assets/logo.png"
-          alt="Gir Kitchenware Studio Logo">
-
-        <span>GIR KITCHENWARE STUDIO</span>
-
+      <div class="logo-icon">
+        🛒
       </div>
 
+      <h1>Gir Kitchenware Studio</h1>
 
-      <nav>
-
-        <a href="#home">Home</a>
-        <a href="#products">Products</a>
-        <a href="#offers">Offers</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#contact">Contact</a>
-
-      </nav>
-
-
-      <a
-        class="whatsapp-btn"
-        href="https://wa.me/918849966743"
-        target="_blank">
-
-        WhatsApp
-
-      </a>
-
-    </div>
-
-  </header>
-
-
-  <!-- HERO SECTION -->
-  <section class="hero" id="home">
-
-    <div class="hero-content">
-
-      <span class="badge">
-        Talala Gir નું Kitchenware Destination
-      </span>
-
-
-      <h1>
-
-        તમારા કિચનની
-
-        <span>શોભા વધારો!</span>
-
-      </h1>
-
-
-      <p>
-
-        Gir Kitchenware Studio માં મેળવો
-        સુંદર, ઉપયોગી અને ગુણવત્તાવાળી
-        કિચનવેરની અનેક વેરાઈટી.
-
+      <p class="subtitle">
+        Admin Panel Login
       </p>
 
+      <div class="input-group">
 
-      <div class="hero-buttons">
+        <label for="email">
+          Email
+        </label>
 
-        <a
-          href="https://wa.me/918849966743"
-          target="_blank"
-          class="whatsapp-btn">
-
-          WhatsApp કરો
-
-        </a>
-
-
-        <a
-          href="#products"
-          class="product-btn">
-
-          પ્રોડક્ટ્સ જુઓ
-
-        </a>
+        <input
+          type="email"
+          id="email"
+          placeholder="Admin Email"
+          autocomplete="email"
+        >
 
       </div>
 
-    </div>
+      <div class="input-group">
 
+        <label for="password">
+          Password
+        </label>
 
-    <div class="hero-image">
-
-      <img
-        src="assets/lunchbox.jpg"
-        alt="Premium Lunch Box available at Gir Kitchenware Studio">
-
-    </div>
-
-  </section>
-
-
-  <!-- ABOUT -->
-  <section class="about">
-
-    <h4>અમારા વિશે</h4>
-
-    <h2>
-      Gir Kitchenware Studio માં આપનું હાર્દિક સ્વાગત છે 🙏
-    </h2>
-
-
-    <p>
-
-      તમારા કિચનને વધુ સુંદર અને ઉપયોગી બનાવવા માટે
-      અહીં Lunch Box, Water Bottles, Vegetable Choppers
-      અને અન્ય અનેક Kitchen Essentials ઉપલબ્ધ છે.
-
-    </p>
-
-
-    <div class="features">
-
-      <div class="feature">
-
-        <span>🛍️</span>
-
-        <h3>100+ વેરાઈટી</h3>
-
-        <p>
-          અનેક પ્રકારની Kitchenware Products
-        </p>
+        <input
+          type="password"
+          id="password"
+          placeholder="Admin Password"
+          autocomplete="current-password"
+        >
 
       </div>
 
+      <button
+        type="button"
+        id="loginBtn"
+        class="login-btn"
+      >
+        🔐 Login
+      </button>
 
-      <div class="feature">
-
-        <span>✨</span>
-
-        <h3>Quality Products</h3>
-
-        <p>
-          ઉપયોગી અને ગુણવત્તાવાળા પ્રોડક્ટ્સ
-        </p>
-
-      </div>
-
-
-      <div class="feature">
-
-        <span>💰</span>
-
-        <h3>Best Price</h3>
-
-        <p>
-          કિફાયતી ભાવ અને ખાસ ઓફર્સ
-        </p>
-
-      </div>
+      <div id="loginMessage"></div>
 
     </div>
 
   </section>
 
 
-  <!-- PRODUCTS -->
-  <section class="products" id="products">
+  <!-- =====================================================
+       ADMIN DASHBOARD
+  ====================================================== -->
 
-    <h4>અમારી ખાસ વેરાઈટી</h4>
+  <section id="dashboard">
 
-    <h2>Popular Products</h2>
+    <!-- TOP BAR -->
 
-
-    <div class="product-grid">
-
-
-      <div class="product-card">
-
-        <img
-          src="assets/lunchbox.jpg"
-          alt="Premium Lunch Box">
-
-        <div class="product-info">
-
-          <h3>Premium Lunch Box</h3>
-
-          <p>
-            સ્કૂલ, ઓફિસ અને ટ્રાવેલ માટે
-            ઉપયોગી Lunch Box.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="product-card">
-
-        <img
-          src="assets/chopper-green.jpg"
-          alt="Green Vegetable Chopper">
-
-        <div class="product-info">
-
-          <h3>Vegetable Chopper</h3>
-
-          <p>
-            ઝડપથી અને સરળતાથી
-            શાકભાજી કાપવા માટે.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="product-card">
-
-        <img
-          src="assets/bottles.jpg"
-          alt="Water Bottles">
-
-        <div class="product-info">
-
-          <h3>Water Bottles</h3>
-
-          <p>
-            દૈનિક ઉપયોગ માટે
-            સુંદર Bottle Variety.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="product-card">
-
-        <img
-          src="assets/kitchen-tool.jpg"
-          alt="Kitchen Tools and Accessories">
-
-        <div class="product-info">
-
-          <h3>Kitchen Tools</h3>
-
-          <p>
-            સ્માર્ટ રસોઈ માટે
-            ઉપયોગી Kitchen Accessories.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="product-card">
-
-        <img
-          src="assets/chopper-black.jpg"
-          alt="Kitchen Chopper">
-
-        <div class="product-info">
-
-          <h3>Kitchen Chopper</h3>
-
-          <p>
-            રોજિંદા કિચન કામને
-            સરળ બનાવતી વેરાઈટી.
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- OFFER -->
-  <section class="offer" id="offers">
-
-    <h4>🔥 SPECIAL OFFER</h4>
-
-    <h2>ખાસ ઓફર</h2>
-
-
-    <div class="offer-grid">
-
-      <div class="price-card">
-
-        <p class="old-price">₹799</p>
-        <h3>₹499</h3>
-
-      </div>
-
-
-      <div class="price-card">
-
-        <p class="old-price">₹1499</p>
-        <h3>₹999</h3>
-
-      </div>
-
-
-      <div class="price-card">
-
-        <p class="old-price">₹2499</p>
-        <h3>₹1499</h3>
-
-      </div>
-
-
-      <div class="price-card">
-
-        <p class="old-price">₹4999</p>
-        <h3>₹2499</h3>
-
-      </div>
-
-    </div>
-
-
-    <a
-      href="https://wa.me/918849966743"
-      target="_blank"
-      class="whatsapp-btn">
-
-      Offer માટે WhatsApp કરો
-
-    </a>
-
-  </section>
-
-
-  <!-- GALLERY -->
-  <section class="gallery" id="gallery">
-
-    <h4>PRODUCT GALLERY</h4>
-
-    <h2>અમારી પ્રોડક્ટ વેરાઈટી</h2>
-
-
-    <div class="gallery-grid">
-
-      <img src="assets/lunchbox.jpg" alt="Lunch Box">
-
-      <img src="assets/chopper-green.jpg" alt="Vegetable Chopper">
-
-      <img src="assets/bottles.jpg" alt="Water Bottles">
-
-      <img src="assets/kitchen-tool.jpg" alt="Kitchen Tools">
-
-      <img src="assets/chopper-black.jpg" alt="Kitchen Chopper">
-
-    </div>
-
-  </section>
-
-
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-
-    <div class="contact-content">
-
+    <header class="topbar">
 
       <div>
 
-        <h4>CONTACT US</h4>
-
         <h2>
-          આજે જ અમારી મુલાકાત લો!
+          🛒 Gir Kitchenware Studio
         </h2>
 
-        <p>
-          તમારા મનપસંદ Kitchenware Products માટે
-          અમારો WhatsApp પર સંપર્ક કરો.
-        </p>
-
-
-        <a
-          href="https://wa.me/918849966743"
-          target="_blank"
-          class="whatsapp-btn">
-
-          💬 WhatsApp કરો
-
-        </a>
+        <small>
+          Product Admin Panel
+        </small>
 
       </div>
 
+      <button
+        type="button"
+        id="logoutBtn"
+        class="logout-btn"
+      >
+        🚪 Logout
+      </button>
 
-      <div class="contact-box">
-
-        <h3>📍 Gir Kitchenware Studio</h3>
-
-
-        <p>
-
-          <strong>Address:</strong>
-
-          <br>
-
-          Akshar Arcade,
-          Gitanjali Mall,
-          Shop No. 13,
-          Talala Gir
-
-        </p>
+    </header>
 
 
-        <p>
+    <!-- MAIN -->
 
-          <strong>Mobile:</strong>
+    <main class="container">
 
-          <br>
-
-          8849966743
-
-        </p>
+      <div class="dashboard-grid">
 
 
-        <div class="contact-buttons">
+        <!-- =================================================
+             ADD / EDIT PRODUCT
+        ================================================== -->
+
+        <div class="card">
+
+          <div
+            class="card-title"
+            id="formTitle"
+          >
+            ➕ Add Product
+          </div>
+
+          <!-- Hidden Product ID -->
+
+          <input
+            type="hidden"
+            id="productId"
+          >
 
 
-          <a
-            href="https://maps.app.goo.gl/v4V1KBhxperJ3JJi8"
-            target="_blank"
-            class="location-btn">
+          <!-- PRODUCT NAME -->
 
-            📍 Location
+          <div class="input-group">
 
-          </a>
+            <label for="name">
+              Product Name *
+            </label>
+
+            <input
+              type="text"
+              id="name"
+              placeholder="Example: Kitchen Bottle"
+            >
+
+          </div>
 
 
-          <a
-            href="https://www.instagram.com/_gir_kitchenware_studio/"
-            target="_blank"
-            class="instagram-btn">
+          <!-- PRICE -->
 
-            📸 Instagram
+          <div class="input-group">
 
-          </a>
+            <label for="price">
+              Price
+            </label>
 
+            <input
+              type="number"
+              id="price"
+              placeholder="Example: 499"
+              min="0"
+            >
+
+          </div>
+
+
+          <!-- OFFER PRICE -->
+
+          <div class="input-group">
+
+            <label for="offerPrice">
+              Offer Price
+            </label>
+
+            <input
+              type="number"
+              id="offerPrice"
+              placeholder="Example: 399"
+              min="0"
+            >
+
+          </div>
+
+
+          <!-- CATEGORY -->
+
+          <div class="input-group">
+
+            <label for="category">
+              Category
+            </label>
+
+            <input
+              type="text"
+              id="category"
+              placeholder="Example: Kitchenware"
+            >
+
+          </div>
+
+
+          <!-- DESCRIPTION -->
+
+          <div class="input-group">
+
+            <label for="description">
+              Description
+            </label>
+
+            <textarea
+              id="description"
+              placeholder="Product description લખો..."
+            ></textarea>
+
+          </div>
+
+
+          <!-- PHOTO -->
+
+          <div class="input-group">
+
+            <label for="photo">
+              Product Photo *
+            </label>
+
+            <input
+              type="file"
+              id="photo"
+              accept="image/*"
+            >
+
+            <img
+              id="preview"
+              alt="Product Preview"
+            >
+
+          </div>
+
+
+          <!-- SAVE -->
+
+          <button
+            type="button"
+            id="saveBtn"
+            class="save-btn"
+          >
+            ➕ Add Product
+          </button>
+
+
+          <!-- CANCEL -->
+
+          <button
+            type="button"
+            id="cancelBtn"
+            class="cancel-btn"
+          >
+            ✖ Cancel Edit
+          </button>
+
+
+          <!-- STATUS -->
+
+          <div id="status"></div>
+
+        </div>
+
+
+        <!-- =================================================
+             PRODUCT LIST
+        ================================================== -->
+
+        <div class="card">
+
+          <div class="products-header">
+
+            <div
+              class="card-title"
+              style="margin-bottom:0;"
+            >
+              📦 Products
+            </div>
+
+            <span
+              id="productCount"
+              class="product-count"
+            >
+              0 Products
+            </span>
+
+          </div>
+
+
+          <div id="productList">
+
+            <div class="empty">
+              Products Loading...
+            </div>
+
+          </div>
 
         </div>
 
       </div>
 
-    </div>
+    </main>
 
   </section>
 
 
-  <!-- FOOTER -->
-  <footer>
+  <!-- =====================================================
+       FIREBASE / ADMIN JAVASCRIPT
+  ====================================================== -->
 
-    <p>
-      © 2026 Gir Kitchenware Studio. All Rights Reserved.
-    </p>
+  <script type="module">
 
-    <p>
-      Akshar Arcade, Gitanjali Mall,
-      Shop No. 13, Talala Gir
-    </p>
-
-  </footer>
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 
-  <!-- FLOATING WHATSAPP BUTTON -->
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-  <a
-    href="https://wa.me/918849966743"
-    target="_blank"
-    class="floating-whatsapp">
 
-    💬
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      getDocs,
+      doc,
+      updateDoc,
+      deleteDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-  </a>
 
+    import {
+      getStorage,
+      ref,
+      uploadBytes,
+      getDownloadURL,
+      deleteObject
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+
+
+    /* =====================================================
+       FIREBASE CONFIG
+    ====================================================== */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyCsMqYCSwNPNpLsBqELJEMn3F-SASfa0lM",
+
+      authDomain:
+        "gir-kitchenware-studio.firebaseapp.com",
+
+      projectId:
+        "gir-kitchenware-studio",
+
+      storageBucket:
+        "gir-kitchenware-studio.firebasestorage.app",
+
+      messagingSenderId:
+        "691904856522",
+
+      appId:
+        "1:691904856522:web:885b408e89f26c73b70f33",
+
+      measurementId:
+        "G-4M27C2P958"
+
+    };
+
+
+    /* =====================================================
+       INITIALIZE FIREBASE
+    ====================================================== */
+
+    const app =
+      initializeApp(firebaseConfig);
+
+    const auth =
+      getAuth(app);
+
+    const db =
+      getFirestore(app);
+
+    const storage =
+      getStorage(app);
+
+
+    /* =====================================================
+       ELEMENTS
+    ====================================================== */
+
+    const loginBox =
+      document.getElementById("loginBox");
+
+    const dashboard =
+      document.getElementById("dashboard");
+
+    const loginBtn =
+      document.getElementById("loginBtn");
+
+    const logoutBtn =
+      document.getElementById("logoutBtn");
+
+    const loginMessage =
+      document.getElementById("loginMessage");
+
+    const status =
+      document.getElementById("status");
+
+    const saveBtn =
+      document.getElementById("saveBtn");
+
+    const cancelBtn =
+      document.getElementById("cancelBtn");
+
+    const productList =
+      document.getElementById("productList");
+
+    const productCount =
+      document.getElementById("productCount");
+
+    const photo =
+      document.getElementById("photo");
+
+    const preview =
+      document.getElementById("preview");
+
+    const productId =
+      document.getElementById("productId");
+
+    const nameInput =
+      document.getElementById("name");
+
+    const priceInput =
+      document.getElementById("price");
+
+    const offerPriceInput =
+      document.getElementById("offerPrice");
+
+    const categoryInput =
+      document.getElementById("category");
+
+    const descriptionInput =
+      document.getElementById("description");
+
+
+    let editingProduct = null;
+
+
+    /* =====================================================
+       LOGIN
+    ====================================================== */
+
+    loginBtn.addEventListener(
+      "click",
+      async () => {
+
+        const email =
+          document.getElementById("email")
+            .value
+            .trim();
+
+        const password =
+          document.getElementById("password")
+            .value;
+
+
+        if (!email || !password) {
+
+          loginMessage.textContent =
+            "Email અને Password નાખો.";
+
+          return;
+
+        }
+
+
+        loginBtn.disabled = true;
+
+        loginMessage.textContent =
+          "Login થઈ રહ્યું છે...";
+
+
+        try {
+
+          await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+          loginMessage.textContent = "";
+
+        }
+
+        catch (error) {
+
+          console.error(error);
+
+          loginMessage.textContent =
+            "❌ Login failed. Email અથવા Password ચેક કરો.";
+
+        }
+
+        finally {
+
+          loginBtn.disabled = false;
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       ENTER KEY LOGIN
+    ====================================================== */
+
+    document
+      .getElementById("password")
+      .addEventListener(
+        "keydown",
+        event => {
+
+          if (event.key === "Enter") {
+
+            loginBtn.click();
+
+          }
+
+        }
+      );
+
+
+    /* =====================================================
+       AUTH STATE
+    ====================================================== */
+
+    onAuthStateChanged(
+      auth,
+      user => {
+
+        if (user) {
+
+          loginBox.style.display =
+            "none";
+
+          dashboard.style.display =
+            "block";
+
+          loadProducts();
+
+        }
+
+        else {
+
+          loginBox.style.display =
+            "flex";
+
+          dashboard.style.display =
+            "none";
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       LOGOUT
+    ====================================================== */
+
+    logoutBtn.addEventListener(
+      "click",
+      async () => {
+
+        try {
+
+          await signOut(auth);
+
+        }
+
+        catch (error) {
+
+          console.error(error);
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       PHOTO PREVIEW
+    ====================================================== */
+
+    photo.addEventListener(
+      "change",
+      () => {
+
+        const file =
+          photo.files[0];
+
+
+        if (!file) {
+
+          preview.style.display =
+            "none";
+
+          preview.src = "";
+
+          return;
+
+        }
+
+
+        preview.src =
+          URL.createObjectURL(file);
+
+        preview.style.display =
+          "block";
+
+      }
+    );
+
+
+    /* =====================================================
+       ADD / UPDATE PRODUCT
+    ====================================================== */
+
+    saveBtn.addEventListener(
+      "click",
+      async () => {
+
+        const name =
+          nameInput.value.trim();
+
+        const price =
+          priceInput.value.trim();
+
+        const offerPrice =
+          offerPriceInput.value.trim();
+
+        const category =
+          categoryInput.value.trim();
+
+        const description =
+          descriptionInput.value.trim();
+
+        const file =
+          photo.files[0];
+
+
+        if (!name) {
+
+          status.textContent =
+            "❌ Product Name નાખો.";
+
+          return;
+
+        }
+
+
+        if (!editingProduct && !file) {
+
+          status.textContent =
+            "❌ Product Photo પસંદ કરો.";
+
+          return;
+
+        }
+
+
+        saveBtn.disabled = true;
+
+        status.textContent =
+          "⏳ Saving...";
+
+
+        try {
+
+          let imageUrl =
+            editingProduct?.imageUrl || "";
+
+          let storagePath =
+            editingProduct?.storagePath || "";
+
+
+          /* =========================
+             UPLOAD NEW IMAGE
+          ========================= */
+
+          if (file) {
+
+            const safeName =
+              file.name
+                .replace(/[^a-zA-Z0-9._-]/g, "_");
+
+
+            const fileName =
+              Date.now() +
+              "_" +
+              safeName;
+
+
+            const storageRef =
+              ref(
+                storage,
+                "products/" +
+                fileName
+              );
+
+
+            await uploadBytes(
+              storageRef,
+              file
+            );
+
+
+            imageUrl =
+              await getDownloadURL(
+                storageRef
+              );
+
+
+            storagePath =
+              "products/" +
+              fileName;
+
+
+            /* DELETE OLD IMAGE */
+
+            if (
+              editingProduct &&
+              editingProduct.storagePath
+            ) {
+
+              try {
+
+                const oldRef =
+                  ref(
+                    storage,
+                    editingProduct.storagePath
+                  );
+
+                await deleteObject(
+                  oldRef
+                );
+
+              }
+
+              catch (error) {
+
+                console.log(
+                  "Old image delete skipped"
+                );
+
+              }
+
+            }
+
+          }
+
+
+          /* =========================
+             PRODUCT DATA
+          ========================= */
+
+          const productData = {
+
+            name: name,
+
+            price:
+              Number(price || 0),
+
+            offerPrice:
+              Number(offerPrice || 0),
+
+            category:
+              category,
+
+            description:
+              description,
+
+            imageUrl:
+              imageUrl,
+
+            storagePath:
+              storagePath,
+
+            updatedAt:
+              serverTimestamp()
+
+          };
+
+
+          /* =========================
+             UPDATE
+          ========================= */
+
+          if (editingProduct) {
+
+            await updateDoc(
+
+              doc(
+                db,
+                "products",
+                editingProduct.id
+              ),
+
+              productData
+
+            );
+
+
+            status.textContent =
+              "✅ Product update થઈ ગયું.";
+
+          }
+
+
+          /* =========================
+             ADD
+          ========================= */
+
+          else {
+
+            await addDoc(
+
+              collection(
+                db,
+                "products"
+              ),
+
+              {
+
+                ...productData,
+
+                createdAt:
+                  serverTimestamp()
+
+              }
+
+            );
+
+
+            status.textContent =
+              "✅ Product add થઈ ગયું.";
+
+          }
+
+
+          resetForm();
+
+          await loadProducts();
+
+        }
+
+
+        catch (error) {
+
+          console.error(error);
+
+          status.textContent =
+            "❌ Error: " +
+            error.message;
+
+        }
+
+
+        finally {
+
+          saveBtn.disabled = false;
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       LOAD PRODUCTS
+    ====================================================== */
+
+    async function loadProducts() {
+
+      productList.innerHTML =
+        `<div class="empty">
+          ⏳ Products Loading...
+        </div>`;
+
+
+      try {
+
+        const snapshot =
+          await getDocs(
+            collection(
+              db,
+              "products"
+            )
+          );
+
+
+        productList.innerHTML = "";
+
+
+        productCount.textContent =
+          `${snapshot.size} Products`;
+
+
+        if (snapshot.empty) {
+
+          productList.innerHTML =
+            `<div class="empty">
+              📦 હજી કોઈ Product નથી.
+              <br><br>
+              ઉપરથી તમારો પહેલો Product Add કરો.
+            </div>`;
+
+          return;
+
+        }
+
+
+        snapshot.forEach(
+          productDoc => {
+
+            const product =
+              productDoc.data();
+
+
+            const card =
+              document.createElement("div");
+
+
+            card.className =
+              "product";
+
+
+            const image =
+              product.imageUrl
+                ? product.imageUrl
+                : "https://via.placeholder.com/500x400?text=No+Image";
+
+
+            const oldPrice =
+              Number(product.price || 0);
+
+            const newPrice =
+              Number(product.offerPrice || 0);
+
+
+            card.innerHTML = `
+
+              <img
+                src="${escapeHtml(image)}"
+                alt="${escapeHtml(product.name || "Product")}"
+                onerror="this.src='https://via.placeholder.com/500x400?text=No+Image'"
+              >
+
+              <div class="product-info">
+
+                <h3>
+                  ${escapeHtml(product.name || "Unnamed Product")}
+                </h3>
+
+                ${
+                  oldPrice > 0
+                    ? `
+                      <div class="price">
+
+                        ${
+                          newPrice > 0 && newPrice < oldPrice
+                            ? `
+                              <span class="old-price">
+                                ₹${oldPrice}
+                              </span>
+
+                              <span class="offer">
+                                ₹${newPrice}
+                              </span>
+                            `
+                            : `
+                              ₹${oldPrice}
+                            `
+                        }
+
+                      </div>
+                    `
+                    : ""
+                }
+
+
+                ${
+                  product.category
+                    ? `
+                      <span class="category">
+                        ${escapeHtml(product.category)}
+                      </span>
+                    `
+                    : ""
+                }
+
+
+                ${
+                  product.description
+                    ? `
+                      <p class="description">
+                        ${escapeHtml(product.description)}
+                      </p>
+                    `
+                    : ""
+                }
+
+
+                <div class="actions">
+
+                  <button
+                    type="button"
+                    class="edit"
+                  >
+                    ✏️ Edit
+                  </button>
+
+                  <button
+                    type="button"
+                    class="delete"
+                  >
+                    🗑️ Delete
+                  </button>
+
+                </div>
+
+              </div>
+
+            `;
+
+
+            productList.appendChild(card);
+
+
+            /* EDIT */
+
+            card
+              .querySelector(".edit")
+              .addEventListener(
+                "click",
+                () => {
+
+                  editProduct(
+                    productDoc.id,
+                    product
+                  );
+
+                }
+              );
+
+
+            /* DELETE */
+
+            card
+              .querySelector(".delete")
+              .addEventListener(
+                "click",
+                () => {
+
+                  deleteProduct(
+                    productDoc.id,
+                    product
+                  );
+
+                }
+              );
+
+          }
+        );
+
+      }
+
+
+      catch (error) {
+
+        console.error(error);
+
+        productCount.textContent =
+          "Error";
+
+
+        productList.innerHTML =
+          `<div class="empty">
+            ❌ Products load થઈ શક્યા નથી.
+            <br><br>
+            Firebase Firestore Rules ચેક કરો.
+          </div>`;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       EDIT PRODUCT
+    ====================================================== */
+
+    function editProduct(
+      id,
+      product
+    ) {
+
+      editingProduct = {
+
+        id,
+
+        ...product
+
+      };
+
+
+      productId.value =
+        id;
+
+
+      nameInput.value =
+        product.name || "";
+
+
+      priceInput.value =
+        product.price || "";
+
+
+      offerPriceInput.value =
+        product.offerPrice || "";
+
+
+      categoryInput.value =
+        product.category || "";
+
+
+      descriptionInput.value =
+        product.description || "";
+
+
+      photo.value = "";
+
+
+      if (product.imageUrl) {
+
+        preview.src =
+          product.imageUrl;
+
+        preview.style.display =
+          "block";
+
+      }
+
+      else {
+
+        preview.src = "";
+
+        preview.style.display =
+          "none";
+
+      }
+
+
+      document.getElementById(
+        "formTitle"
+      ).textContent =
+        "✏️ Edit Product";
+
+
+      saveBtn.textContent =
+        "💾 Update Product";
+
+
+      cancelBtn.style.display =
+        "block";
+
+
+      status.textContent =
+        "Product edit mode માં છે.";
+
+
+      window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+      });
+
+    }
+
+
+    /* =====================================================
+       DELETE PRODUCT
+    ====================================================== */
+
+    async function deleteProduct(
+      id,
+      product
+    ) {
+
+      const confirmDelete =
+        confirm(
+          `શું "${product.name || "આ Product"}" delete કરવો છે?`
+        );
+
+
+      if (!confirmDelete) {
+
+        return;
+
+      }
+
+
+      try {
+
+        status.textContent =
+          "⏳ Product delete થઈ રહ્યું છે...";
+
+
+        /* DELETE FIRESTORE */
+
+        await deleteDoc(
+
+          doc(
+            db,
+            "products",
+            id
+          )
+
+        );
+
+
+        /* DELETE IMAGE */
+
+        if (product.storagePath) {
+
+          try {
+
+            await deleteObject(
+
+              ref(
+                storage,
+                product.storagePath
+              )
+
+            );
+
+          }
+
+          catch (error) {
+
+            console.log(
+              "Image delete skipped:",
+              error
+            );
+
+          }
+
+        }
+
+
+        status.textContent =
+          "🗑️ Product delete થઈ ગયું.";
+
+
+        await loadProducts();
+
+      }
+
+
+      catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+          "❌ Delete Error: " +
+          error.message;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       CANCEL EDIT
+    ====================================================== */
+
+    cancelBtn.addEventListener(
+      "click",
+      () => {
+
+        resetForm();
+
+        status.textContent =
+          "";
+
+      }
+    );
+
+
+    /* =====================================================
+       RESET FORM
+    ====================================================== */
+
+    function resetForm() {
+
+      editingProduct = null;
+
+
+      productId.value =
+        "";
+
+
+      nameInput.value =
+        "";
+
+
+      priceInput.value =
+        "";
+
+
+      offerPriceInput.value =
+        "";
+
+
+      categoryInput.value =
+        "";
+
+
+      descriptionInput.value =
+        "";
+
+
+      photo.value =
+        "";
+
+
+      preview.src =
+        "";
+
+
+      preview.style.display =
+        "none";
+
+
+      document.getElementById(
+        "formTitle"
+      ).textContent =
+        "➕ Add Product";
+
+
+      saveBtn.textContent =
+        "➕ Add Product";
+
+
+      cancelBtn.style.display =
+        "none";
+
+    }
+
+
+    /* =====================================================
+       HTML ESCAPE
+    ====================================================== */
+
+    function escapeHtml(value) {
+
+      return String(value)
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+  </script>
 
 </body>
 </html>
