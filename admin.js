@@ -1,13 +1,18 @@
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+/* =====================================================
+   GIR KITCHENWARE STUDIO
+   ADMIN PANEL - FIREBASE
+   ===================================================== */
+
+import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
   getAuth,
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+} from
+  "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
   getFirestore,
@@ -18,7 +23,8 @@ import {
   updateDoc,
   deleteDoc,
   serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} from
+  "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 import {
   getStorage,
@@ -26,12 +32,13 @@ import {
   uploadBytes,
   getDownloadURL,
   deleteObject
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+} from
+  "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 
-/* =========================
+/* =====================================================
    FIREBASE CONFIG
-========================= */
+   ===================================================== */
 
 const firebaseConfig = {
   apiKey: "AIzaSyCsMqYCSwNPNpLsBqELJEMn3F-SASfa0lM",
@@ -44,9 +51,9 @@ const firebaseConfig = {
 };
 
 
-/* =========================
+/* =====================================================
    INITIALIZE FIREBASE
-========================= */
+   ===================================================== */
 
 const app = initializeApp(firebaseConfig);
 
@@ -57,9 +64,9 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 
-/* =========================
+/* =====================================================
    ELEMENTS
-========================= */
+   ===================================================== */
 
 const loginBox = document.getElementById("loginBox");
 
@@ -89,25 +96,30 @@ const nameInput = document.getElementById("name");
 
 const priceInput = document.getElementById("price");
 
-const offerPriceInput = document.getElementById("offerPrice");
+const offerPriceInput =
+  document.getElementById("offerPrice");
 
-const categoryInput = document.getElementById("category");
+const categoryInput =
+  document.getElementById("category");
 
-const descriptionInput = document.getElementById("description");
+const descriptionInput =
+  document.getElementById("description");
 
 
 let editingProduct = null;
 
 
-/* =========================
+/* =====================================================
    LOGIN
-========================= */
+   ===================================================== */
 
 loginBtn.addEventListener("click", async () => {
 
-  const email = document.getElementById("email").value.trim();
+  const email =
+    document.getElementById("email").value.trim();
 
-  const password = document.getElementById("password").value;
+  const password =
+    document.getElementById("password").value;
 
   if (!email || !password) {
 
@@ -117,7 +129,8 @@ loginBtn.addEventListener("click", async () => {
     return;
   }
 
-  loginMessage.textContent = "Login થઈ રહ્યું છે...";
+  loginMessage.textContent =
+    "Login થઈ રહ્યું છે...";
 
   try {
 
@@ -141,11 +154,11 @@ loginBtn.addEventListener("click", async () => {
 });
 
 
-/* =========================
+/* =====================================================
    AUTH STATE
-========================= */
+   ===================================================== */
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, (user) => {
 
   if (user) {
 
@@ -166,20 +179,28 @@ onAuthStateChanged(auth, user => {
 });
 
 
-/* =========================
+/* =====================================================
    LOGOUT
-========================= */
+   ===================================================== */
 
 logoutBtn.addEventListener("click", async () => {
 
-  await signOut(auth);
+  try {
+
+    await signOut(auth);
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
 
 });
 
 
-/* =========================
+/* =====================================================
    PHOTO PREVIEW
-========================= */
+   ===================================================== */
 
 photo.addEventListener("change", () => {
 
@@ -189,38 +210,63 @@ photo.addEventListener("change", () => {
 
     preview.style.display = "none";
 
+    preview.src = "";
+
     return;
+
   }
 
-  preview.src = URL.createObjectURL(file);
+  preview.src =
+    URL.createObjectURL(file);
 
   preview.style.display = "block";
 
 });
 
 
-/* =========================
+/* =====================================================
    ADD / UPDATE PRODUCT
-========================= */
+   ===================================================== */
 
 saveBtn.addEventListener("click", async () => {
 
-  const name = nameInput.value.trim();
+  const name =
+    nameInput.value.trim();
 
-  const price = priceInput.value.trim();
+  const price =
+    priceInput.value.trim();
 
-  const offerPrice = offerPriceInput.value.trim();
+  const offerPrice =
+    offerPriceInput.value.trim();
 
-  const category = categoryInput.value.trim();
+  const category =
+    categoryInput.value.trim();
 
-  const description = descriptionInput.value.trim();
+  const description =
+    descriptionInput.value.trim();
 
-  const file = photo.files[0];
+  const file =
+    photo.files[0];
 
+
+  /* -------------------------
+     VALIDATION
+     ------------------------- */
 
   if (!name) {
 
-    status.textContent = "Product Name નાખો.";
+    status.textContent =
+      "Product Name નાખો.";
+
+    return;
+
+  }
+
+
+  if (!category) {
+
+    status.textContent =
+      "Category નાખો.";
 
     return;
 
@@ -239,7 +285,8 @@ saveBtn.addEventListener("click", async () => {
 
   saveBtn.disabled = true;
 
-  status.textContent = "Saving...";
+  status.textContent =
+    "Product save થઈ રહ્યું છે...";
 
 
   try {
@@ -251,17 +298,28 @@ saveBtn.addEventListener("click", async () => {
       editingProduct?.storagePath || "";
 
 
-    /* Upload new image */
+    /* =========================
+       UPLOAD NEW IMAGE
+       ========================= */
 
     if (file) {
 
       const fileName =
-        Date.now() + "_" + file.name;
+        Date.now() + "_" +
+        file.name.replace(
+          /[^a-zA-Z0-9._-]/g,
+          "_"
+        );
+
+
+      const storagePathNew =
+        "products/" + fileName;
+
 
       const storageRef =
         ref(
           storage,
-          "products/" + fileName
+          storagePathNew
         );
 
 
@@ -278,10 +336,12 @@ saveBtn.addEventListener("click", async () => {
 
 
       storagePath =
-        "products/" + fileName;
+        storagePathNew;
 
 
-      /* Delete old photo */
+      /* =========================
+         DELETE OLD IMAGE
+         ========================= */
 
       if (
         editingProduct &&
@@ -296,12 +356,14 @@ saveBtn.addEventListener("click", async () => {
               editingProduct.storagePath
             );
 
+
           await deleteObject(oldRef);
 
         } catch (error) {
 
           console.log(
-            "Old image delete skipped"
+            "Old image delete skipped:",
+            error
           );
 
         }
@@ -311,22 +373,31 @@ saveBtn.addEventListener("click", async () => {
     }
 
 
+    /* =========================
+       PRODUCT DATA
+       ========================= */
+
     const productData = {
 
-      name,
+      name: name,
 
-      price: Number(price || 0),
+      price:
+        Number(price || 0),
 
       offerPrice:
         Number(offerPrice || 0),
 
-      category,
+      category:
+        category,
 
-      description,
+      description:
+        description,
 
-      imageUrl,
+      imageUrl:
+        imageUrl,
 
-      storagePath,
+      storagePath:
+        storagePath,
 
       updatedAt:
         serverTimestamp()
@@ -334,7 +405,9 @@ saveBtn.addEventListener("click", async () => {
     };
 
 
-    /* UPDATE */
+    /* =========================
+       UPDATE PRODUCT
+       ========================= */
 
     if (editingProduct) {
 
@@ -350,13 +423,16 @@ saveBtn.addEventListener("click", async () => {
 
       );
 
+
       status.textContent =
         "✅ Product update થઈ ગયું.";
 
     }
 
 
-    /* ADD */
+    /* =========================
+       ADD PRODUCT
+       ========================= */
 
     else {
 
@@ -378,11 +454,16 @@ saveBtn.addEventListener("click", async () => {
 
       );
 
+
       status.textContent =
         "✅ Product add થઈ ગયું.";
 
     }
 
+
+    /* =========================
+       RESET
+       ========================= */
 
     resetForm();
 
@@ -394,7 +475,8 @@ saveBtn.addEventListener("click", async () => {
     console.error(error);
 
     status.textContent =
-      "❌ Error: " + error.message;
+      "❌ Error: " +
+      error.message;
 
   }
 
@@ -404,24 +486,26 @@ saveBtn.addEventListener("click", async () => {
 });
 
 
-/* =========================
+/* =====================================================
    LOAD PRODUCTS
-========================= */
+   ===================================================== */
 
 async function loadProducts() {
 
   productList.innerHTML =
-    "Loading...";
+    "<p>Loading products...</p>";
 
 
   try {
 
     const snapshot =
       await getDocs(
+
         collection(
           db,
           "products"
         )
+
       );
 
 
@@ -438,99 +522,160 @@ async function loadProducts() {
     }
 
 
-    snapshot.forEach(productDoc => {
+    snapshot.forEach(
+      (productDoc) => {
 
-      const product =
-        productDoc.data();
-
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "product";
+        const product =
+          productDoc.data();
 
 
-      card.innerHTML = `
+        /* =========================
+           PRODUCT CARD
+           ========================= */
 
-        <img
-          src="${product.imageUrl || ""}"
-          alt="${escapeHtml(product.name || "")}">
+        const card =
+          document.createElement("div");
 
-        <div class="product-info">
+        card.className =
+          "product";
 
-          <h3>
-            ${escapeHtml(product.name || "")}
-          </h3>
 
-          <div class="price">
+        const normalPrice =
+          Number(
+            product.price || 0
+          ).toLocaleString("en-IN");
 
-            ₹${product.price || 0}
 
-            ${
-              product.offerPrice
-                ? `<span class="offer">
-                    → ₹${product.offerPrice}
-                  </span>`
-                : ""
+        const offerPrice =
+          Number(
+            product.offerPrice || 0
+          ).toLocaleString("en-IN");
+
+
+        card.innerHTML = `
+
+          <img
+            src="${escapeHtml(
+              product.imageUrl || ""
+            )}"
+            alt="${escapeHtml(
+              product.name || ""
+            )}"
+            onerror="
+              this.style.display='none';
+            "
+          >
+
+
+          <div class="product-info">
+
+            <h3>
+              ${escapeHtml(
+                product.name || ""
+              )}
+            </h3>
+
+
+            <div class="price">
+
+              ₹${normalPrice}
+
+              ${
+                product.offerPrice
+                  ? `
+                    <span class="offer">
+                      → ₹${offerPrice}
+                    </span>
+                  `
+                  : ""
+              }
+
+            </div>
+
+
+            <p>
+              <strong>Category:</strong>
+              ${escapeHtml(
+                product.category || ""
+              )}
+            </p>
+
+
+            <p>
+              ${escapeHtml(
+                product.description || ""
+              )}
+            </p>
+
+
+            <div class="actions">
+
+              <button
+                class="edit"
+                type="button">
+
+                ✏️ Edit
+
+              </button>
+
+
+              <button
+                class="delete"
+                type="button">
+
+                🗑️ Delete
+
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+
+        productList.appendChild(card);
+
+
+        /* =========================
+           EDIT BUTTON
+           ========================= */
+
+        card
+          .querySelector(".edit")
+          .addEventListener(
+            "click",
+            () => {
+
+              editProduct(
+                productDoc.id,
+                product
+              );
+
             }
-
-          </div>
-
-          <p>
-            ${escapeHtml(product.category || "")}
-          </p>
-
-          <p>
-            ${escapeHtml(product.description || "")}
-          </p>
-
-          <div class="actions">
-
-            <button
-              class="edit"
-              data-id="${productDoc.id}">
-              ✏️ Edit
-            </button>
-
-            <button
-              class="delete"
-              data-id="${productDoc.id}">
-              🗑️ Delete
-            </button>
-
-          </div>
-
-        </div>
-
-      `;
+          );
 
 
-      productList.appendChild(card);
+        /* =========================
+           DELETE BUTTON
+           ========================= */
 
+        card
+          .querySelector(".delete")
+          .addEventListener(
+            "click",
+            () => {
 
-      card
-        .querySelector(".edit")
-        .addEventListener(
-          "click",
-          () => editProduct(
-            productDoc.id,
-            product
-          )
-        );
+              deleteProduct(
+                productDoc.id,
+                product
+              );
 
+            }
+          );
 
-      card
-        .querySelector(".delete")
-        .addEventListener(
-          "click",
-          () => deleteProduct(
-            productDoc.id,
-            product
-          )
-        );
-
-    });
+      }
+    );
 
 
   } catch (error) {
@@ -540,16 +685,23 @@ async function loadProducts() {
     productList.innerHTML =
       "<p>Products load થઈ શક્યા નથી.</p>";
 
+    status.textContent =
+      "❌ Products load error: " +
+      error.message;
+
   }
 
 }
 
 
-/* =========================
+/* =====================================================
    EDIT PRODUCT
-========================= */
+   ===================================================== */
 
-function editProduct(id, product) {
+function editProduct(
+  id,
+  product
+) {
 
   editingProduct = {
 
@@ -560,22 +712,31 @@ function editProduct(id, product) {
   };
 
 
-  productId.value = id;
+  productId.value =
+    id;
+
 
   nameInput.value =
     product.name || "";
 
+
   priceInput.value =
     product.price || "";
+
 
   offerPriceInput.value =
     product.offerPrice || "";
 
+
   categoryInput.value =
     product.category || "";
 
+
   descriptionInput.value =
     product.description || "";
+
+
+  photo.value = "";
 
 
   if (product.imageUrl) {
@@ -589,10 +750,18 @@ function editProduct(id, product) {
   }
 
 
-  document.getElementById(
-    "formTitle"
-  ).textContent =
-    "✏️ Edit Product";
+  const formTitle =
+    document.getElementById(
+      "formTitle"
+    );
+
+
+  if (formTitle) {
+
+    formTitle.textContent =
+      "✏️ Edit Product";
+
+  }
 
 
   saveBtn.textContent =
@@ -604,16 +773,19 @@ function editProduct(id, product) {
 
 
   window.scrollTo({
+
     top: 0,
+
     behavior: "smooth"
+
   });
 
 }
 
 
-/* =========================
+/* =====================================================
    DELETE PRODUCT
-========================= */
+   ===================================================== */
 
 async function deleteProduct(
   id,
@@ -626,35 +798,61 @@ async function deleteProduct(
     );
 
 
-  if (!confirmDelete) return;
+  if (!confirmDelete) {
+
+    return;
+
+  }
+
+
+  status.textContent =
+    "Product delete થઈ રહ્યું છે...";
 
 
   try {
 
+    /* =========================
+       DELETE FIRESTORE DATA
+       ========================= */
+
     await deleteDoc(
+
       doc(
         db,
         "products",
         id
       )
+
     );
 
 
-    if (product.storagePath) {
+    /* =========================
+       DELETE STORAGE IMAGE
+       ========================= */
+
+    if (
+      product.storagePath
+    ) {
 
       try {
 
-        await deleteObject(
+        const imageRef =
           ref(
             storage,
             product.storagePath
-          )
+          );
+
+
+        await deleteObject(
+          imageRef
         );
+
 
       } catch (error) {
 
         console.log(
-          "Photo delete skipped"
+          "Photo delete skipped:",
+          error
         );
 
       }
@@ -664,6 +862,7 @@ async function deleteProduct(
 
     status.textContent =
       "🗑️ Product delete થઈ ગયું.";
+
 
     await loadProducts();
 
@@ -681,47 +880,77 @@ async function deleteProduct(
 }
 
 
-/* =========================
+/* =====================================================
    CANCEL EDIT
-========================= */
+   ===================================================== */
 
 cancelBtn.addEventListener(
   "click",
-  resetForm
+  () => {
+
+    resetForm();
+
+  }
 );
 
 
-/* =========================
+/* =====================================================
    RESET FORM
-========================= */
+   ===================================================== */
 
 function resetForm() {
 
   editingProduct = null;
 
-  productId.value = "";
 
-  nameInput.value = "";
-
-  priceInput.value = "";
-
-  offerPriceInput.value = "";
-
-  categoryInput.value = "";
-
-  descriptionInput.value = "";
-
-  photo.value = "";
-
-  preview.src = "";
-
-  preview.style.display = "none";
+  productId.value =
+    "";
 
 
-  document.getElementById(
-    "formTitle"
-  ).textContent =
-    "➕ Add Product";
+  nameInput.value =
+    "";
+
+
+  priceInput.value =
+    "";
+
+
+  offerPriceInput.value =
+    "";
+
+
+  categoryInput.value =
+    "";
+
+
+  descriptionInput.value =
+    "";
+
+
+  photo.value =
+    "";
+
+
+  preview.src =
+    "";
+
+
+  preview.style.display =
+    "none";
+
+
+  const formTitle =
+    document.getElementById(
+      "formTitle"
+    );
+
+
+  if (formTitle) {
+
+    formTitle.textContent =
+      "➕ Add Product";
+
+  }
 
 
   saveBtn.textContent =
@@ -734,22 +963,37 @@ function resetForm() {
 }
 
 
-/* =========================
-   BASIC HTML ESCAPE
-========================= */
+/* =====================================================
+   ESCAPE HTML
+   ===================================================== */
 
 function escapeHtml(value) {
 
   return String(value)
 
-    .replaceAll("&", "&amp;")
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
 
-    .replaceAll("<", "&lt;")
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
 
-    .replaceAll(">", "&gt;")
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
 
-    .replaceAll('"', "&quot;")
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
 
-    .replaceAll("'", "&#039;");
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
