@@ -3,76 +3,249 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Gir Kitchenware Studio | Admin Panel</title>
+
   <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
+
+  <!-- ================= LOGIN ================= -->
+
   <div id="loginScreen" class="screen">
+
     <div class="login-card">
-      <div class="brand">GIR KITCHENWARE STUDIO</div>
+
+      <div class="brand">
+        GIR KITCHENWARE STUDIO
+      </div>
+
       <h1>Admin Login</h1>
+
       <p>Product Management Panel</p>
-      <input id="email" type="email" placeholder="Admin Email">
-      <input id="password" type="password" placeholder="Password">
-      <button id="loginBtn">Login</button>
+
+      <input
+        id="email"
+        type="email"
+        placeholder="Admin Email"
+        autocomplete="email"
+      >
+
+      <input
+        id="password"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+      >
+
+      <button id="loginBtn">
+        Login
+      </button>
+
       <div id="loginMsg" class="msg"></div>
+
     </div>
+
   </div>
+
+
+  <!-- ================= ADMIN ================= -->
 
   <div id="adminApp" class="hidden">
+
     <header class="admin-header">
+
       <div>
-        <strong>GIR KITCHENWARE STUDIO</strong>
-        <span>Admin Panel</span>
+
+        <strong>
+          GIR KITCHENWARE STUDIO
+        </strong>
+
+        <span>
+          Admin Panel
+        </span>
+
       </div>
-      <button id="logoutBtn" class="logout">Logout</button>
+
+      <button
+        id="logoutBtn"
+        class="logout"
+      >
+        Logout
+      </button>
+
     </header>
 
+
     <main class="container">
+
+
+      <!-- ================= ADD PRODUCT ================= -->
+
       <section class="panel">
-        <h2 id="formTitle">Add Product</h2>
+
+        <h2 id="formTitle">
+          Add Product
+        </h2>
+
         <form id="productForm">
-          <input type="hidden" id="productId">
-          <label>Product Name</label>
-          <input id="productName" required placeholder="Example: Premium Lunch Box">
 
-          <label>Category</label>
-          <input id="productCategory" placeholder="Example: Lunch Box">
+          <input
+            type="hidden"
+            id="productId"
+          >
 
-          <label>Price</label>
-          <input id="productPrice" type="number" min="0" placeholder="499">
 
-          <label>Description</label>
-          <textarea id="productDescription" rows="4" placeholder="Product description"></textarea>
+          <label>
+            Product Name
+          </label>
 
-          <label>Image URL</label>
-          <input id="productImage" placeholder="assets/lunchbox.jpg">
+          <input
+            id="productName"
+            required
+            placeholder="Example: Premium Lunch Box"
+          >
+
+
+          <label>
+            Category
+          </label>
+
+          <input
+            id="productCategory"
+            required
+            placeholder="Example: Lunch Box"
+          >
+
+
+          <label>
+            Regular Price
+          </label>
+
+          <input
+            id="productPrice"
+            type="number"
+            min="0"
+            placeholder="499"
+          >
+
+
+          <label>
+            Offer Price
+          </label>
+
+          <input
+            id="productOfferPrice"
+            type="number"
+            min="0"
+            placeholder="399"
+          >
+
+
+          <label>
+            Description
+          </label>
+
+          <textarea
+            id="productDescription"
+            rows="4"
+            placeholder="Product description"
+          ></textarea>
+
+
+          <label>
+            Product Image
+          </label>
+
+          <input
+            id="productImage"
+            type="file"
+            accept="image/*"
+          >
+
+
+          <img
+            id="imagePreview"
+            class="image-preview hidden"
+            alt="Product Preview"
+          >
+
 
           <div class="actions">
-            <button type="submit" class="primary">Save Product</button>
-            <button type="button" id="cancelEdit" class="secondary hidden">Cancel Edit</button>
+
+            <button
+              type="submit"
+              id="saveProductBtn"
+              class="primary"
+            >
+              Save Product
+            </button>
+
+            <button
+              type="button"
+              id="cancelEdit"
+              class="secondary hidden"
+            >
+              Cancel Edit
+            </button>
+
           </div>
-          <div id="formMsg" class="msg"></div>
+
+
+          <div
+            id="formMsg"
+            class="msg"
+          ></div>
+
         </form>
+
       </section>
+
+
+      <!-- ================= PRODUCTS ================= -->
 
       <section class="panel">
+
         <div class="list-head">
+
           <div>
-            <h2>Products</h2>
-            <p id="count">0 products</p>
+
+            <h2>
+              Products
+            </h2>
+
+            <p id="count">
+              0 products
+            </p>
+
           </div>
-          <input id="search" class="search" placeholder="Search product...">
+
+
+          <input
+            id="search"
+            class="search"
+            placeholder="Search product..."
+          >
+
         </div>
-        <div id="productList" class="product-list"></div>
+
+
+        <div
+          id="productList"
+          class="product-list"
+        ></div>
+
       </section>
+
     </main>
+
   </div>
 
-  <!-- Firebase compat SDK. Replace configuration in admin.js before deployment. -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-  <script src="admin.js"></script>
+
+  <!-- ================= FIREBASE ================= -->
+
+  <script type="module" src="admin.js"></script>
+
 </body>
 </html>
