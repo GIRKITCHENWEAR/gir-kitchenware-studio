@@ -2,35 +2,31 @@
 <html lang="gu">
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Gir Kitchenware Studio - Admin Panel</title>
 
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
     body {
-      font-family: Arial, sans-serif;
       background: #f4f6f8;
       color: #222;
     }
 
-    /* =========================
-       LOGIN
-    ========================= */
-
+    /* LOGIN */
     #loginBox {
+      width: 100%;
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       padding: 20px;
-      background: linear-gradient(135deg, #111827, #374151);
     }
 
     .login-card {
@@ -39,110 +35,79 @@
       background: white;
       padding: 35px;
       border-radius: 18px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.12);
     }
 
     .login-card h1 {
       text-align: center;
-      font-size: 26px;
       margin-bottom: 8px;
-      color: #111827;
+      color: #d35400;
     }
 
-    .login-card .subtitle {
+    .login-card p {
       text-align: center;
       color: #777;
-      margin-bottom: 28px;
-    }
-
-    .logo-icon {
-      width: 70px;
-      height: 70px;
-      margin: 0 auto 15px;
-      border-radius: 50%;
-      background: #111827;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-    }
-
-    /* =========================
-       INPUTS
-    ========================= */
-
-    .input-group {
-      margin-bottom: 18px;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: 600;
+      margin-bottom: 25px;
     }
 
     input,
     textarea,
     select {
       width: 100%;
-      padding: 13px 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      outline: none;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-top: 7px;
+      margin-bottom: 15px;
       font-size: 15px;
-      background: white;
+      outline: none;
     }
 
     input:focus,
     textarea:focus,
     select:focus {
-      border-color: #111827;
+      border-color: #d35400;
     }
 
     textarea {
-      min-height: 110px;
       resize: vertical;
+      min-height: 100px;
     }
 
-    /* =========================
-       BUTTON
-    ========================= */
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 5px;
+    }
 
     button {
       border: none;
       cursor: pointer;
+      border-radius: 8px;
+      padding: 12px 18px;
       font-size: 15px;
       font-weight: 600;
-      border-radius: 10px;
-      padding: 12px 18px;
     }
 
-    .login-btn {
+    #loginBtn {
       width: 100%;
-      background: #111827;
+      background: #d35400;
       color: white;
       margin-top: 5px;
     }
 
-    .login-btn:hover {
-      background: #000;
+    #loginBtn:hover {
+      background: #b94700;
     }
-
-    /* =========================
-       LOGIN MESSAGE
-    ========================= */
 
     #loginMessage {
       text-align: center;
+      color: #d35400;
       margin-top: 15px;
-      color: #dc2626;
-      font-size: 14px;
+      min-height: 20px;
     }
 
-    /* =========================
-       DASHBOARD
-    ========================= */
+    /* DASHBOARD */
 
     #dashboard {
       display: none;
@@ -150,367 +115,252 @@
     }
 
     .topbar {
-      background: #111827;
+      background: #d35400;
       color: white;
       padding: 16px 25px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
 
     .topbar h2 {
-      font-size: 21px;
+      font-size: 22px;
     }
 
-    .topbar small {
-      display: block;
-      color: #d1d5db;
-      margin-top: 3px;
+    #logoutBtn {
+      background: white;
+      color: #d35400;
     }
 
-    .logout-btn {
-      background: #dc2626;
-      color: white;
-    }
-
-    .logout-btn:hover {
-      background: #b91c1c;
+    #logoutBtn:hover {
+      background: #f2f2f2;
     }
 
     .container {
-      max-width: 1250px;
+      width: 100%;
+      max-width: 1200px;
       margin: auto;
       padding: 25px;
     }
 
-    /* =========================
-       DASHBOARD GRID
-    ========================= */
+    /* FORM */
 
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 400px 1fr;
-      gap: 25px;
-      align-items: start;
-    }
-
-    /* =========================
-       CARD
-    ========================= */
-
-    .card {
+    .form-card {
       background: white;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      margin-bottom: 30px;
     }
 
-    .card-title {
-      font-size: 20px;
-      font-weight: 700;
+    .form-card h2 {
       margin-bottom: 20px;
+      color: #d35400;
     }
 
-    /* =========================
-       PRODUCT FORM
-    ========================= */
-
-    .save-btn {
-      background: #16a34a;
-      color: white;
-      width: 100%;
-      margin-top: 8px;
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
     }
 
-    .save-btn:hover {
-      background: #15803d;
-    }
-
-    .save-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .cancel-btn {
-      background: #6b7280;
-      color: white;
-      width: 100%;
-      margin-top: 10px;
-      display: none;
-    }
-
-    .cancel-btn:hover {
-      background: #4b5563;
-    }
-
-    #preview {
-      width: 100%;
-      max-height: 220px;
-      object-fit: contain;
-      margin-top: 12px;
-      border-radius: 12px;
+    .photo-preview {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
       border: 1px solid #ddd;
       display: none;
-      background: #f8fafc;
+      margin-bottom: 15px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #saveBtn {
+      background: #27ae60;
+      color: white;
+    }
+
+    #saveBtn:hover {
+      background: #219150;
+    }
+
+    #cancelBtn {
+      background: #777;
+      color: white;
+      display: none;
     }
 
     #status {
       margin-top: 15px;
-      text-align: center;
       font-weight: 600;
-      min-height: 22px;
     }
 
-    /* =========================
-       PRODUCTS HEADER
-    ========================= */
+    /* PRODUCTS */
 
-    .products-header {
+    .products-title {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 18px;
-      gap: 15px;
+      margin-bottom: 15px;
     }
 
-    .product-count {
-      background: #111827;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 13px;
+    .products-title h2 {
+      color: #333;
     }
-
-    /* =========================
-       PRODUCTS
-    ========================= */
 
     #productList {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
 
     .product {
-      background: #fff;
-      border: 1px solid #e5e7eb;
+      background: white;
       border-radius: 15px;
       overflow: hidden;
-      transition: 0.2s;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
     }
 
-    .product:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    }
-
-    .product > img {
+    .product img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
-      background: #f3f4f6;
-      display: block;
+      background: #eee;
     }
 
     .product-info {
-      padding: 15px;
+      padding: 18px;
     }
 
     .product-info h3 {
-      font-size: 18px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-size: 19px;
     }
 
     .price {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 7px;
-    }
-
-    .old-price {
-      color: #888;
-      text-decoration: line-through;
-      font-size: 14px;
-      margin-right: 7px;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
     }
 
     .offer {
-      color: #16a34a;
-      font-weight: 700;
+      color: #27ae60;
+      margin-left: 5px;
     }
 
-    .category {
-      display: inline-block;
-      background: #f3f4f6;
-      padding: 5px 9px;
-      border-radius: 6px;
-      font-size: 12px;
-      margin-bottom: 9px;
-    }
-
-    .description {
+    .product-info p {
       color: #666;
-      font-size: 14px;
+      margin-bottom: 7px;
       line-height: 1.5;
-      margin-bottom: 13px;
     }
-
-    /* =========================
-       ACTION BUTTONS
-    ========================= */
 
     .actions {
       display: flex;
       gap: 8px;
+      margin-top: 15px;
     }
 
     .edit {
-      flex: 1;
-      background: #2563eb;
+      background: #3498db;
       color: white;
-    }
-
-    .edit:hover {
-      background: #1d4ed8;
+      flex: 1;
     }
 
     .delete {
-      flex: 1;
-      background: #dc2626;
+      background: #e74c3c;
       color: white;
+      flex: 1;
+    }
+
+    .edit:hover {
+      background: #217dbb;
     }
 
     .delete:hover {
-      background: #b91c1c;
+      background: #c0392b;
     }
 
-    /* =========================
-       EMPTY
-    ========================= */
+    /* MOBILE */
 
-    .empty {
-      text-align: center;
-      padding: 40px 20px;
-      color: #777;
-      background: #f9fafb;
-      border-radius: 12px;
-      grid-column: 1 / -1;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 1000px) {
-
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-      }
-
+    @media (max-width: 900px) {
       #productList {
         grid-template-columns: repeat(2, 1fr);
       }
-
     }
 
-    @media (max-width: 650px) {
+    @media (max-width: 600px) {
 
       .topbar {
-        padding: 14px 15px;
-      }
-
-      .topbar h2 {
-        font-size: 17px;
-      }
-
-      .topbar small {
-        font-size: 11px;
-      }
-
-      .logout-btn {
-        padding: 9px 12px;
-        font-size: 13px;
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
       }
 
       .container {
         padding: 15px;
       }
 
-      .card {
-        padding: 17px;
+      .row {
+        grid-template-columns: 1fr;
+        gap: 0;
       }
 
       #productList {
         grid-template-columns: 1fr;
       }
 
-      .login-card {
-        padding: 25px 20px;
+      .form-card {
+        padding: 18px;
       }
 
+      .product img {
+        height: 240px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- =====================================================
-       LOGIN PAGE
-  ====================================================== -->
+  <!-- =========================
+       LOGIN
+  ========================== -->
 
   <section id="loginBox">
 
     <div class="login-card">
 
-      <div class="logo-icon">
-        🛒
-      </div>
-
       <h1>Gir Kitchenware Studio</h1>
 
-      <p class="subtitle">
-        Admin Panel Login
-      </p>
+      <p>Admin Panel Login</p>
 
-      <div class="input-group">
+      <label for="email">
+        Email
+      </label>
 
-        <label for="email">
-          Email
-        </label>
-
-        <input
-          type="email"
-          id="email"
-          placeholder="Admin Email"
-          autocomplete="email"
-        >
-
-      </div>
-
-      <div class="input-group">
-
-        <label for="password">
-          Password
-        </label>
-
-        <input
-          type="password"
-          id="password"
-          placeholder="Admin Password"
-          autocomplete="current-password"
-        >
-
-      </div>
-
-      <button
-        type="button"
-        id="loginBtn"
-        class="login-btn"
+      <input
+        type="email"
+        id="email"
+        placeholder="Admin Email"
       >
+
+      <label for="password">
+        Password
+      </label>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+      >
+
+      <button id="loginBtn">
         🔐 Login
       </button>
 
@@ -521,9 +371,9 @@
   </section>
 
 
-  <!-- =====================================================
-       ADMIN DASHBOARD
-  ====================================================== -->
+  <!-- =========================
+       DASHBOARD
+  ========================== -->
 
   <section id="dashboard">
 
@@ -531,95 +381,66 @@
 
     <header class="topbar">
 
-      <div>
+      <h2>
+        🛒 Gir Kitchenware Studio
+      </h2>
 
-        <h2>
-          🛒 Gir Kitchenware Studio
-        </h2>
-
-        <small>
-          Product Admin Panel
-        </small>
-
-      </div>
-
-      <button
-        type="button"
-        id="logoutBtn"
-        class="logout-btn"
-      >
+      <button id="logoutBtn">
         🚪 Logout
       </button>
 
     </header>
 
 
-    <!-- MAIN -->
-
     <main class="container">
 
-      <div class="dashboard-grid">
+
+      <!-- =========================
+           PRODUCT FORM
+      ========================== -->
+
+      <div class="form-card">
+
+        <h2 id="formTitle">
+          ➕ Add Product
+        </h2>
+
+        <input
+          type="hidden"
+          id="productId"
+        >
 
 
-        <!-- =================================================
-             ADD / EDIT PRODUCT
-        ================================================== -->
+        <label for="name">
+          Product Name *
+        </label>
 
-        <div class="card">
-
-          <div
-            class="card-title"
-            id="formTitle"
-          >
-            ➕ Add Product
-          </div>
-
-          <!-- Hidden Product ID -->
-
-          <input
-            type="hidden"
-            id="productId"
-          >
+        <input
+          type="text"
+          id="name"
+          placeholder="Example: Water Bottle"
+        >
 
 
-          <!-- PRODUCT NAME -->
+        <div class="row">
 
-          <div class="input-group">
-
-            <label for="name">
-              Product Name *
-            </label>
-
-            <input
-              type="text"
-              id="name"
-              placeholder="Example: Kitchen Bottle"
-            >
-
-          </div>
-
-
-          <!-- PRICE -->
-
-          <div class="input-group">
+          <div>
 
             <label for="price">
-              Price
+              Original Price
             </label>
 
             <input
               type="number"
               id="price"
-              placeholder="Example: 499"
+              placeholder="799"
               min="0"
             >
 
           </div>
 
 
-          <!-- OFFER PRICE -->
-
-          <div class="input-group">
+          <div>
 
             <label for="offerPrice">
               Offer Price
@@ -628,142 +449,98 @@
             <input
               type="number"
               id="offerPrice"
-              placeholder="Example: 399"
+              placeholder="499"
               min="0"
             >
 
           </div>
 
-
-          <!-- CATEGORY -->
-
-          <div class="input-group">
-
-            <label for="category">
-              Category
-            </label>
-
-            <input
-              type="text"
-              id="category"
-              placeholder="Example: Kitchenware"
-            >
-
-          </div>
+        </div>
 
 
-          <!-- DESCRIPTION -->
+        <label for="category">
+          Category
+        </label>
 
-          <div class="input-group">
-
-            <label for="description">
-              Description
-            </label>
-
-            <textarea
-              id="description"
-              placeholder="Product description લખો..."
-            ></textarea>
-
-          </div>
+        <input
+          type="text"
+          id="category"
+          placeholder="Example: Kitchenware"
+        >
 
 
-          <!-- PHOTO -->
+        <label for="description">
+          Product Description
+        </label>
 
-          <div class="input-group">
-
-            <label for="photo">
-              Product Photo *
-            </label>
-
-            <input
-              type="file"
-              id="photo"
-              accept="image/*"
-            >
-
-            <img
-              id="preview"
-              alt="Product Preview"
-            >
-
-          </div>
+        <textarea
+          id="description"
+          placeholder="Product વિશે માહિતી લખો..."
+        ></textarea>
 
 
-          <!-- SAVE -->
+        <label for="photo">
+          Product Photo *
+        </label>
 
-          <button
-            type="button"
-            id="saveBtn"
-            class="save-btn"
-          >
+        <input
+          type="file"
+          id="photo"
+          accept="image/*"
+        >
+
+
+        <img
+          id="preview"
+          class="photo-preview"
+          alt="Product Preview"
+        >
+
+
+        <div class="buttons">
+
+          <button id="saveBtn">
             ➕ Add Product
           </button>
 
-
-          <!-- CANCEL -->
-
-          <button
-            type="button"
-            id="cancelBtn"
-            class="cancel-btn"
-          >
-            ✖ Cancel Edit
+          <button id="cancelBtn">
+            ❌ Cancel
           </button>
 
-
-          <!-- STATUS -->
-
-          <div id="status"></div>
-
         </div>
 
 
-        <!-- =================================================
-             PRODUCT LIST
-        ================================================== -->
-
-        <div class="card">
-
-          <div class="products-header">
-
-            <div
-              class="card-title"
-              style="margin-bottom:0;"
-            >
-              📦 Products
-            </div>
-
-            <span
-              id="productCount"
-              class="product-count"
-            >
-              0 Products
-            </span>
-
-          </div>
-
-
-          <div id="productList">
-
-            <div class="empty">
-              Products Loading...
-            </div>
-
-          </div>
-
-        </div>
+        <div id="status"></div>
 
       </div>
+
+
+      <!-- =========================
+           PRODUCT LIST
+      ========================== -->
+
+      <div class="products-title">
+
+        <h2>
+          📦 Products
+        </h2>
+
+      </div>
+
+
+      <div id="productList">
+        Loading...
+      </div>
+
 
     </main>
 
   </section>
 
 
-  <!-- =====================================================
-       FIREBASE / ADMIN JAVASCRIPT
-  ====================================================== -->
+  <!-- =========================
+       FIREBASE + ADMIN JS
+  ========================== -->
 
   <script type="module">
 
@@ -801,9 +578,9 @@
     } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 
-    /* =====================================================
+    /* =========================
        FIREBASE CONFIG
-    ====================================================== */
+    ========================== */
 
     const firebaseConfig = {
 
@@ -827,13 +604,12 @@
 
       measurementId:
         "G-4M27C2P958"
-
     };
 
 
-    /* =====================================================
+    /* =========================
        INITIALIZE FIREBASE
-    ====================================================== */
+    ========================== */
 
     const app =
       initializeApp(firebaseConfig);
@@ -848,9 +624,9 @@
       getStorage(app);
 
 
-    /* =====================================================
+    /* =========================
        ELEMENTS
-    ====================================================== */
+    ========================== */
 
     const loginBox =
       document.getElementById("loginBox");
@@ -878,9 +654,6 @@
 
     const productList =
       document.getElementById("productList");
-
-    const productCount =
-      document.getElementById("productCount");
 
     const photo =
       document.getElementById("photo");
@@ -910,9 +683,9 @@
     let editingProduct = null;
 
 
-    /* =====================================================
+    /* =========================
        LOGIN
-    ====================================================== */
+    ========================== */
 
     loginBtn.addEventListener(
       "click",
@@ -934,7 +707,6 @@
             "Email અને Password નાખો.";
 
           return;
-
         }
 
 
@@ -954,9 +726,8 @@
 
           loginMessage.textContent = "";
 
-        }
 
-        catch (error) {
+        } catch (error) {
 
           console.error(error);
 
@@ -965,19 +736,16 @@
 
         }
 
-        finally {
 
-          loginBtn.disabled = false;
-
-        }
+        loginBtn.disabled = false;
 
       }
     );
 
 
-    /* =====================================================
+    /* =========================
        ENTER KEY LOGIN
-    ====================================================== */
+    ========================== */
 
     document
       .getElementById("password")
@@ -986,18 +754,16 @@
         event => {
 
           if (event.key === "Enter") {
-
             loginBtn.click();
-
           }
 
         }
       );
 
 
-    /* =====================================================
+    /* =========================
        AUTH STATE
-    ====================================================== */
+    ========================== */
 
     onAuthStateChanged(
       auth,
@@ -1013,9 +779,7 @@
 
           loadProducts();
 
-        }
-
-        else {
+        } else {
 
           loginBox.style.display =
             "flex";
@@ -1029,9 +793,9 @@
     );
 
 
-    /* =====================================================
+    /* =========================
        LOGOUT
-    ====================================================== */
+    ========================== */
 
     logoutBtn.addEventListener(
       "click",
@@ -1041,9 +805,7 @@
 
           await signOut(auth);
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
           console.error(error);
 
@@ -1053,9 +815,9 @@
     );
 
 
-    /* =====================================================
+    /* =========================
        PHOTO PREVIEW
-    ====================================================== */
+    ========================== */
 
     photo.addEventListener(
       "change",
@@ -1067,13 +829,24 @@
 
         if (!file) {
 
+          preview.src = "";
+
           preview.style.display =
             "none";
 
-          preview.src = "";
+          return;
+        }
+
+
+        if (!file.type.startsWith("image/")) {
+
+          alert(
+            "કૃપા કરીને image file પસંદ કરો."
+          );
+
+          photo.value = "";
 
           return;
-
         }
 
 
@@ -1087,9 +860,9 @@
     );
 
 
-    /* =====================================================
+    /* =========================
        ADD / UPDATE PRODUCT
-    ====================================================== */
+    ========================== */
 
     saveBtn.addEventListener(
       "click",
@@ -1120,7 +893,6 @@
             "❌ Product Name નાખો.";
 
           return;
-
         }
 
 
@@ -1130,14 +902,13 @@
             "❌ Product Photo પસંદ કરો.";
 
           return;
-
         }
 
 
         saveBtn.disabled = true;
 
         status.textContent =
-          "⏳ Saving...";
+          "⏳ Product save થઈ રહ્યું છે...";
 
 
         try {
@@ -1149,13 +920,11 @@
             editingProduct?.storagePath || "";
 
 
-          /* =========================
-             UPLOAD NEW IMAGE
-          ========================= */
+          /* UPLOAD NEW IMAGE */
 
           if (file) {
 
-            const safeName =
+            const safeFileName =
               file.name
                 .replace(/[^a-zA-Z0-9._-]/g, "_");
 
@@ -1163,14 +932,18 @@
             const fileName =
               Date.now() +
               "_" +
-              safeName;
+              safeFileName;
+
+
+            const storagePathNew =
+              "products/" +
+              fileName;
 
 
             const storageRef =
               ref(
                 storage,
-                "products/" +
-                fileName
+                storagePathNew
               );
 
 
@@ -1187,8 +960,7 @@
 
 
             storagePath =
-              "products/" +
-              fileName;
+              storagePathNew;
 
 
             /* DELETE OLD IMAGE */
@@ -1210,12 +982,10 @@
                   oldRef
                 );
 
-              }
-
-              catch (error) {
+              } catch (error) {
 
                 console.log(
-                  "Old image delete skipped"
+                  "Old image delete skipped."
                 );
 
               }
@@ -1224,10 +994,6 @@
 
           }
 
-
-          /* =========================
-             PRODUCT DATA
-          ========================= */
 
           const productData = {
 
@@ -1257,9 +1023,7 @@
           };
 
 
-          /* =========================
-             UPDATE
-          ========================= */
+          /* UPDATE */
 
           if (editingProduct) {
 
@@ -1282,9 +1046,7 @@
           }
 
 
-          /* =========================
-             ADD
-          ========================= */
+          /* ADD */
 
           else {
 
@@ -1308,7 +1070,7 @@
 
 
             status.textContent =
-              "✅ Product add થઈ ગયું.";
+              "✅ Product successfully add થઈ ગયું.";
 
           }
 
@@ -1317,10 +1079,8 @@
 
           await loadProducts();
 
-        }
 
-
-        catch (error) {
+        } catch (error) {
 
           console.error(error);
 
@@ -1331,26 +1091,20 @@
         }
 
 
-        finally {
-
-          saveBtn.disabled = false;
-
-        }
+        saveBtn.disabled = false;
 
       }
     );
 
 
-    /* =====================================================
+    /* =========================
        LOAD PRODUCTS
-    ====================================================== */
+    ========================== */
 
     async function loadProducts() {
 
       productList.innerHTML =
-        `<div class="empty">
-          ⏳ Products Loading...
-        </div>`;
+        "<p>⏳ Products loading...</p>";
 
 
       try {
@@ -1367,18 +1121,10 @@
         productList.innerHTML = "";
 
 
-        productCount.textContent =
-          `${snapshot.size} Products`;
-
-
         if (snapshot.empty) {
 
           productList.innerHTML =
-            `<div class="empty">
-              📦 હજી કોઈ Product નથી.
-              <br><br>
-              ઉપરથી તમારો પહેલો Product Add કરો.
-            </div>`;
+            "<p>હજુ કોઈ product નથી.</p>";
 
           return;
 
@@ -1395,99 +1141,60 @@
             const card =
               document.createElement("div");
 
-
             card.className =
               "product";
-
-
-            const image =
-              product.imageUrl
-                ? product.imageUrl
-                : "https://via.placeholder.com/500x400?text=No+Image";
-
-
-            const oldPrice =
-              Number(product.price || 0);
-
-            const newPrice =
-              Number(product.offerPrice || 0);
 
 
             card.innerHTML = `
 
               <img
-                src="${escapeHtml(image)}"
+                src="${escapeHtml(product.imageUrl || "")}"
                 alt="${escapeHtml(product.name || "Product")}"
-                onerror="this.src='https://via.placeholder.com/500x400?text=No+Image'"
               >
 
               <div class="product-info">
 
                 <h3>
-                  ${escapeHtml(product.name || "Unnamed Product")}
+                  ${escapeHtml(product.name || "")}
                 </h3>
 
-                ${
-                  oldPrice > 0
+                <div class="price">
+
+                  ₹${Number(product.price || 0)}
+
+                  ${
+                    Number(product.offerPrice || 0) > 0
                     ? `
-                      <div class="price">
-
-                        ${
-                          newPrice > 0 && newPrice < oldPrice
-                            ? `
-                              <span class="old-price">
-                                ₹${oldPrice}
-                              </span>
-
-                              <span class="offer">
-                                ₹${newPrice}
-                              </span>
-                            `
-                            : `
-                              ₹${oldPrice}
-                            `
-                        }
-
-                      </div>
-                    `
-                    : ""
-                }
-
-
-                ${
-                  product.category
-                    ? `
-                      <span class="category">
-                        ${escapeHtml(product.category)}
+                      <span class="offer">
+                        → ₹${Number(product.offerPrice)}
                       </span>
                     `
                     : ""
-                }
+                  }
 
+                </div>
 
-                ${
-                  product.description
-                    ? `
-                      <p class="description">
-                        ${escapeHtml(product.description)}
-                      </p>
-                    `
-                    : ""
-                }
+                <p>
+                  <strong>Category:</strong>
+                  ${escapeHtml(product.category || "-")}
+                </p>
 
+                <p>
+                  ${escapeHtml(product.description || "")}
+                </p>
 
                 <div class="actions">
 
                   <button
-                    type="button"
                     class="edit"
+                    type="button"
                   >
                     ✏️ Edit
                   </button>
 
                   <button
-                    type="button"
                     class="delete"
+                    type="button"
                   >
                     🗑️ Delete
                   </button>
@@ -1501,8 +1208,6 @@
 
             productList.appendChild(card);
 
-
-            /* EDIT */
 
             card
               .querySelector(".edit")
@@ -1518,8 +1223,6 @@
                 }
               );
 
-
-            /* DELETE */
 
             card
               .querySelector(".delete")
@@ -1538,32 +1241,28 @@
           }
         );
 
-      }
 
-
-      catch (error) {
+      } catch (error) {
 
         console.error(error);
 
-        productCount.textContent =
-          "Error";
-
-
         productList.innerHTML =
-          `<div class="empty">
+          `
+          <p>
             ❌ Products load થઈ શક્યા નથી.
-            <br><br>
-            Firebase Firestore Rules ચેક કરો.
-          </div>`;
+            <br>
+            ${escapeHtml(error.message)}
+          </p>
+          `;
 
       }
 
     }
 
 
-    /* =====================================================
+    /* =========================
        EDIT PRODUCT
-    ====================================================== */
+    ========================== */
 
     function editProduct(
       id,
@@ -1572,7 +1271,7 @@
 
       editingProduct = {
 
-        id,
+        id: id,
 
         ...product
 
@@ -1616,15 +1315,6 @@
 
       }
 
-      else {
-
-        preview.src = "";
-
-        preview.style.display =
-          "none";
-
-      }
-
 
       document.getElementById(
         "formTitle"
@@ -1637,11 +1327,10 @@
 
 
       cancelBtn.style.display =
-        "block";
+        "inline-block";
 
 
-      status.textContent =
-        "Product edit mode માં છે.";
+      status.textContent = "";
 
 
       window.scrollTo({
@@ -1655,9 +1344,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        DELETE PRODUCT
-    ====================================================== */
+    ========================== */
 
     async function deleteProduct(
       id,
@@ -1666,14 +1355,12 @@
 
       const confirmDelete =
         confirm(
-          `શું "${product.name || "આ Product"}" delete કરવો છે?`
+          `શું "${product.name || "આ product"}" delete કરવો છે?`
         );
 
 
       if (!confirmDelete) {
-
         return;
-
       }
 
 
@@ -1682,8 +1369,6 @@
         status.textContent =
           "⏳ Product delete થઈ રહ્યું છે...";
 
-
-        /* DELETE FIRESTORE */
 
         await deleteDoc(
 
@@ -1695,8 +1380,6 @@
 
         );
 
-
-        /* DELETE IMAGE */
 
         if (product.storagePath) {
 
@@ -1711,13 +1394,10 @@
 
             );
 
-          }
-
-          catch (error) {
+          } catch (error) {
 
             console.log(
-              "Image delete skipped:",
-              error
+              "Photo delete skipped."
             );
 
           }
@@ -1731,10 +1411,8 @@
 
         await loadProducts();
 
-      }
 
-
-      catch (error) {
+      } catch (error) {
 
         console.error(error);
 
@@ -1747,9 +1425,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        CANCEL EDIT
-    ====================================================== */
+    ========================== */
 
     cancelBtn.addEventListener(
       "click",
@@ -1757,20 +1435,20 @@
 
         resetForm();
 
-        status.textContent =
-          "";
+        status.textContent = "";
 
       }
     );
 
 
-    /* =====================================================
+    /* =========================
        RESET FORM
-    ====================================================== */
+    ========================== */
 
     function resetForm() {
 
-      editingProduct = null;
+      editingProduct =
+        null;
 
 
       productId.value =
@@ -1825,9 +1503,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================
        HTML ESCAPE
-    ====================================================== */
+    ========================== */
 
     function escapeHtml(value) {
 
